@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <title>YouTube DLR</title>
+  </head>
+  <body>
+    <section id="main">
+      <div id="InputFormatSection">
+        <form action="">
+          <input type="text" name="videoURL" id="videoURLInput" />
+          <div class="fileFormatContainer">
+            <!-- Add a submit on radio buttons to fire up python data fetch function -->
+            <div class="fileFormatInputContainer">
+              <p>MP 4</p>
+              <input type="checkbox" name="mp4" id="formatSelect" />
+            </div>
+            <div class="fileFormatInputContainer">
+              <p>MP 3</p>
+              <input type="checkbox" name="mp3" id="formatSelect" />
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="EditAndResolutionSection">
+        <div id="EditFileContainer">
+          <h2>Edit File</h2>
+          <form action="">
+            <input type="text" name="fileName" id="fileDataInput" />
+            <input type="text" name="downloadLocation" id="fileDataInput" />
+            <button type="submit">Download</button>
+          </form>
+        </div>
+        <div id="ResolutionSelectContainer">
+          <h2>Select Video Resolution</h2>
+          <form action="">
+            <input type="button" value="1080" id />
+            <input type="button" value="720" />
+            <input type="button" value="360" />
+            <input type="button" value="240" />
+            <input type="button" value="144" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
