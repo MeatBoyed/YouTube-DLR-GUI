@@ -12,7 +12,7 @@
     <section id="main">
       <div id="InputFormatSection">
         <form action="">
-          <input type="text" name="videoURL" id="videoURLInput" />
+          <input type="text" name="videoURL" placeholder="Enter YouTube URL" id="videoURLInput" />
           <div class="fileFormatContainer">
             <!-- Add a submit on radio buttons to fire up python data fetch function -->
             <div class="fileFormatInputContainer">
@@ -31,19 +31,27 @@
         <div id="EditFileContainer">
           <h2>Edit File</h2>
           <form action="">
-            <input type="text" name="fileName" id="fileDataInput" />
-            <input type="text" name="downloadLocation" id="fileDataInput" />
-            <button type="submit">Download</button>
+            <input type="text" placeholder="File Name" name="fileName" id="fileDataInput" />
+            <input type="text" placeholder="Album Artist" name="albumArtist" id="fileDataInput" />
+            <input
+              type="text"
+              placeholder="Contributing Artists (Ft artists)"
+              name="contributingArtists"
+              id="fileDataInput"
+            />
+            <input type="text" placeholder="Album Name" name="albumName" id="fileDataInput" />
+            <input type="text" placeholder="Download Location" name="downloadLocation" id="fileDataInput" />
+            <button type="submit" class="downloadButton">Download</button>
           </form>
         </div>
         <div id="ResolutionSelectContainer">
           <h2>Select Video Resolution</h2>
           <form action="">
-            <input type="button" value="1080" id />
-            <input type="button" value="720" />
-            <input type="button" value="360" />
-            <input type="button" value="240" />
-            <input type="button" value="144" />
+            <input type="button" value="1080" class="resolutionSelect" />
+            <input type="button" value="720p" class="resolutionSelect" />
+            <input type="button" value="480p" class="resolutionSelect" />
+            <input type="button" value="240p" class="resolutionSelect" />
+            <input type="button" value="144p" class="resolutionSelect" />
           </form>
         </div>
       </div>
