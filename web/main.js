@@ -6,8 +6,13 @@ function ValidateURL() {
     let output = document.getElementById("errorMessage")
 
     // Calling to Python utils function
-    eel.ValidateURL(videoURL)(function(res) {
+    eel.ValidateURL(videoURL)(function(response) {
         // Ouputing the returned response message into Error Message field
-        output.innerText = res 
+        console.log(response)
+
+        let data = response.videoData
+        console.log("Video data: ", data)
+
+        output.innerText = response.errorMessage 
     })
 }

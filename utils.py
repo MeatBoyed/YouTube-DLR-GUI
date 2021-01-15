@@ -1,3 +1,4 @@
+from logging import error
 import eel
 from pytube import YouTube
 from pytube import exceptions
@@ -10,6 +11,7 @@ eel.init("web")
 # Validate input video's url, if successful will run DataFetching function
 @eel.expose
 def ValidateURL(url: str):
+
     """
     Runs validation checks to ensure the inputed url is valid for downloading with PyTube.
     Returns Boolean value, with respective error message to display to user.
@@ -18,40 +20,48 @@ def ValidateURL(url: str):
             Inputed YouTube video url
     """
 
-    response = ""
+    errorMessage = ""
+    data = {}
 
     # Run PyTube validation checks
     try:
         # Create PyTube YouTube object instance
-        YouTube(url)
+        video = YouTube(url)
+
+        # Call DataFetching helper function
+        data = DataFetch(video)
 
         # Reset's response for output
-        response = ""
+        errorMessage = ""
 
-    # Exceptions handle all possible Errors that may be caused and saves it in response variable to be out putted to user as an understandble error message
+    # Exceptions handle all possible Errors that may be caused and saves it in errorMessage variable to be out putted to user as an understandble error message
     except exceptions.RegexMatchError or exceptions.ExtractError or exceptions.HTMLParseError:
-        response = "Entered URL is invalid. Try again."
+        errorMessage = "Entered URL is invalid. Try again."
     except exceptions.VideoUnavailable:
-        response = "Video is Unavailable."
+        errorMessage = "Video is Unavailable."
     except exceptions.VideoPrivate:
-        resoltion = "Video is Private."
+        errorMessage = "Video is Private."
     except exceptions.VideoRegionBlocked:
-        response = "Video is Region Blocked."
+        errorMessage = "Video is Region Blocked."
     except exceptions.RecordingUnavailable:
-        response = "Video Recording is Unavailable."
+        errorMessage = "Video Recording is Unavailable."
     except exceptions.MembersOnly:
-        response = "Video is assessable by Memebers Only."
+        errorMessage = "Video is assessable by Memebers Only."
     except exceptions.LiveStreamError:
-        response = "Video is currently being Live Streamed."
+        errorMessage = "Video is currently being Live Streamed."
     except Exception as e:
-        response = "An unexpected error occured while downloading the video: " + str(e)
+        errorMessage = "An unexpected error occured while downloading the video: " + str(e)
     
-    print(response)
+    response = {
+        "errorMessage": errorMessage,
+        "videoData": data
+    }
+
     return response
 
 
 # Collects all data needed about the YouTube video. The video's title 
-def DataFetch(url: str, youtubeVideoInstance):
+def DataFetch(youtubeVideoInstance):
 
     """
         :param str url:
@@ -60,12 +70,24 @@ def DataFetch(url: str, youtubeVideoInstance):
             A PyTube YouTube() class instance, which will be used to collect data on
     """
 
+    availabelResolutions = []
+
+    # Get list of availabel streams, filterig out DASH streams
+    streams = youtubeVideoInstance.streams.filter(progressive=True)
+
     # Collect video's title for the file name
     fileName = youtubeVideoInstance.title
 
-    # Collect all the available resolutions for the video
-    
+    # Iterating through all streams to collect availabel resolutions
+    for stream in streams:
+        availabelResolutions.append(stream.resolution)
 
+    response = {
+        "fileName": fileName,
+        "resolutions": availabelResolutions,
+    }
+
+    return response
 
 
 # Download's the requested video. Accepts video's url, the selected video resolution, and the desired download location path
