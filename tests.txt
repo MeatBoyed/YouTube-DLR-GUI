@@ -16,3 +16,10 @@ Be able to change the download location with ented download location param.
 command: python -m youtube_dl -o [path + filename] [url]
 
 Use youtube-dl for downloading audio as it is considrably faster than PyTube
+
+
+Every button call will always access the value inside the "videoURL" input.
+After the video's url has been inputted, run a quick function to check that it's valid and can be downloaded. Maybe run also get all the availabele resolutions to the video and find a way to iterate over the list and output it with JS to
+HTML.
+
+Each download button for video, will take the inputted url's value and the filename along with download location, and use this data for download function params, also specifying the video's quality.

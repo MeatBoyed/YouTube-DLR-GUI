@@ -6,32 +6,35 @@
 
     <link rel="stylesheet" href="style.css" />
 
+    <!-- Import Eel and main.js -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <!-- Importing js linker -->
+    <script type="text/javascript" src="main.js"></script>
+
     <title>YouTube DLR</title>
   </head>
   <body>
     <section id="main">
       <div id="InputFormatSection">
         <form action="">
-          <input type="text" name="videoURL" placeholder="Enter YouTube URL" id="videoURLInput" />
-          <div class="fileFormatContainer">
-            <!-- Add a submit on radio buttons to fire up python data fetch function -->
-            <div class="fileFormatInputContainer">
-              <p>MP 4</p>
-              <input type="checkbox" name="mp4" id="formatSelect" />
-            </div>
-            <div class="fileFormatInputContainer">
-              <p>MP 3</p>
-              <input type="checkbox" name="mp3" id="formatSelect" />
-            </div>
-          </div>
+          <input
+            type="text"
+            type="submit"
+            onchange="ValidateURL()"
+            name="videoURL"
+            placeholder="Enter YouTube URL"
+            id="videoURLInput"
+          />
         </form>
       </div>
 
+      <p id="errorMessage"></p>
+
       <div id="EditAndResolutionSection">
         <div id="EditFileContainer">
-          <h2>Edit File</h2>
+          <h2>Download Audio</h2>
           <form action="">
-            <input type="text" placeholder="File Name" name="fileName" id="fileDataInput" />
+            <input type="text" placeholder="File Name" value="" name="fileName" id="fileDataInput" />
             <input type="text" placeholder="Album Artist" name="albumArtist" id="fileDataInput" />
             <input
               type="text"
@@ -45,8 +48,9 @@
           </form>
         </div>
         <div id="ResolutionSelectContainer">
-          <h2>Select Video Resolution</h2>
-          <form action="">
+          <h2>Download Video</h2>
+          <form>
+            <input type="text" placeholder="File Name" value="" name="fileName" id="fileDataInput" />
             <input type="button" value="1080" class="resolutionSelect" />
             <input type="button" value="720p" class="resolutionSelect" />
             <input type="button" value="480p" class="resolutionSelect" />
