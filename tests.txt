@@ -1,0 +1,18 @@
+Be able to output all of the available resolutions
+Use PyTube.streams to do this
+
+Be able to download a video of a specific resolution.
+Seen as you're not going higher than 720p for videos becuase of DASH. Just use PyTube. You can easily make clear filterson which stream you want and download speeds aren't too much of an issue.
+
+Be able to show progress bar
+
+
+
+Be able to change the name of the file with entered name param.
+command: python -m youtube_dl -o [filename] [url]
+-o states the output name of the file, must be followed by the desired video name.
+
+Be able to change the download location with ented download location param.
+command: python -m youtube_dl -o [path + filename] [url]
+
+Use youtube-dl for downloading audio as it is considrably faster than PyTube

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- import font -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="ytdlrStyle.css" />
+    <title>YTDLR template</title>
+  </head>
+  <body>
+    <section id="main">
+      <div id="header">
+        <h1 class="title">YouTube Video Downloader</h1>
+        <!-- Make "youtube-dl" a link -->
+        <p>Download or convert YouTube videos, using youtube-dl</p>
+      </div>
+      <div id="urlInputSection">
+        <input
+          type="text"
+          name="urlInput"
+          id="UrlInput"
+          class="urlInput"
+          placeholder="Pase YouTube URL here"
+          aria-placeholder="Paste YouTube URL here"
+        />
+        <button class="downloadButton">Download</button>
+      </div>
+      <div id="optionsSection">
+        <div class="formatOption">
+          <select name="" id="" class="formatSelect">
+            <option value="mp4">MP 4</option>
+            <option value="mp3">MP 3</option>
+          </select>
+        </div>
+        <div class="qualityOption">
+          <select name="" id="" class="qualitySelect">
+            <option value="best">Best</option>
+            <option value="worst">Worst</option>
+          </select>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
