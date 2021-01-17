@@ -51,28 +51,6 @@ a {
   outline: none;
 }
 
-.fileFormatContainer {
-  display: flex;
-  justify-content: flex-start;
-  margin: 0;
-  align-items: center;
-  flex-direction: row;
-  height: 1.8em;
-}
-
-.fileFormatInputContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 30px;
-}
-
-.fileFormatInputContainer p {
-  margin: 0;
-  margin-right: 10px;
-  font-size: 22px;
-}
-
 #EditAndResolutionSection {
   display: flex;
   flex-direction: row;
@@ -80,35 +58,6 @@ a {
   align-items: center;
   height: 20em;
   width: 70%;
-}
-
-#EditFileContainer {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  flex-direction: column;
-  background-color: #ffffff;
-  color: white;
-  height: 100%;
-  border-radius: 10px;
-  width: 62%;
-  justify-content: center;
-  height: 85%;
-}
-
-#EditFileContainer h2 {
-  margin: 0;
-  font-size: 30px;
-}
-
-#EditFileContainer form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  margin-top: 35px;
-  border-radius: 15px;
 }
 
 #fileDataInput {
@@ -123,54 +72,29 @@ a {
   margin-bottom: 15px;
 }
 
-.downloadButton {
-  background-image: initial;
-  background-color: rgb(141, 35, 35);
-  box-shadow: rgba(124, 49, 38, 0.4) 0px 4px 10px;
-  border-color: initial;
-  color: rgb(243, 246, 252);
-  background: red;
-  box-shadow: 0 4px 10px rgba(255, 86, 63, 0.4);
-  border-radius: 12px;
-  padding: 18px 40px;
-  display: inline-block;
-  border: none;
-  color: #fdfdfe;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  outline: none;
-  margin-top: 30px;
-}
-
 #ResolutionSelectContainer {
   background: #fff;
   color: black;
-  width: 38%;
-  margin-left: 1em;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 85%;
   justify-content: center;
 }
 
 #ResolutionSelectContainer h2 {
   margin: 0;
+  margin-bottom: 2em;
   font-size: 25px;
   text-align: center;
-  margin-top: 0.5em;
-  color: white;
+  /* color: white; */
 }
 
 #ResolutionSelectContainer form {
   display: flex;
   flex-direction: column;
   width: 80%;
-  margin-top: 22px;
-  margin-top: 35px;
 }
 
 .resolutionSelect {
@@ -192,4 +116,8 @@ a {
   transition: all 0.3s;
   outline: none;
   margin-top: 10px;
+}
+
+#downloadPath {
+  display: none;
 }

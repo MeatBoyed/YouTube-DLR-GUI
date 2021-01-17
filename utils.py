@@ -8,7 +8,6 @@ import moviepy.editor as mp
 
 eel.init("web")
 
-
 # User has selected file format (mp4 or mp3). This set's off the respective function to collect the data about the video
 
 # Validate input video's url, if successful will run DataFetching function
@@ -30,6 +29,7 @@ def ValidateURL(url: str):
     try:
         # Create PyTube YouTube object instance
         video = YouTube(url)
+        DownloadVideo.videoInstance = video
 
         # Call DataFetching helper function
         data = DataFetch(video)
@@ -92,54 +92,38 @@ def DataFetch(youtubeVideoInstance):
 
     return response
 
-
-# Download's the requested video. Accepts video's url, the selected video resolution, and the desired download location path
-# def DownloadVideo(url: str, resolution: str, filename: str, downloadLocation: str):
-    # Make query to download the video with the correct parameters
-
-
 # Download video class. Handles downloading Audio and video files, merging them into one and finally deleting all temp files
 @eel.expose
 class DownloadVideo():
 
     # Add all class variables here
     response = ""
+    outputpath = ""
+    videoInstance = None
 
     # Add class init function to run other things
-    def __init__(self, url: str, resolution: str, fileName: str, outputPath: str):
+    def __init__(self, resolution: str, fileName: str):
 
         """
-            :param url:
-                Verified inputted YouTube video url
             :param resolution:
                 Desired video resolution of video to download
             :param filename:
                 Desired inputted filename of outputed video
-            :param outputPath:
-                Desired inputted filepath to save the ouput video
         """
 
-        print("Class has been called WOOP")
-        
-        # Get all streams for requested YouTube video
-        self.streams = YouTube(url).streams 
+        print("Download has begun")
 
         # Download the tempuraty video and audio files needed to merge for final video. Will return audio file's path
-        tempVideo = self.streams.filter(only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
-        tempAudio = self.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
-
-        print("Downloaded temp Video and Audio files")
+        tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
+        tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
 
         # Merge files together
-        print("Merging Video and Audio files")
-        result = self.MergeFiles(tempVideo=tempVideo, tempAudio=tempAudio, outputPath=outputPath, fileName=fileName)
+        result = self.MergeFiles(tempVideo=tempVideo, tempAudio=tempAudio, outputPath=self.outputpath, fileName=fileName)
 
         # Clean up files
-        self.CleanUp()
+        self.CleanUp(tempVideoFile=tempVideo, tempAudioFile=tempAudio)
         
         self.response = result
-        print(f"This is the reponse: {result}")
-
     
     # Use Moviepy to merge audio and video files
     def MergeFiles(self, tempVideo, tempAudio, outputPath, fileName):
@@ -152,7 +136,7 @@ class DownloadVideo():
         tempOutputVideo = video.set_audio(audio)
 
         # Write changes to new output file. Filename is (desired outputPath + desired fileName)
-        outputVideo = tempOutputVideo.write_videofile(os.path.join(outputPath, (fileName + ".mp4")))
+        tempOutputVideo.write_videofile(os.path.join(outputPath, (fileName + ".mp4")))
 
         print("Merge completeed")
 
@@ -160,8 +144,18 @@ class DownloadVideo():
 
         
     # Use OS to delete all temp files and folders
-    def CleanUp(self):
-        pass
+    def CleanUp(self, tempVideoFile, tempAudioFile):
+
+        """
+            :param tempVideoFile:
+                Path to temp video file
+            :param tempAudioFile:
+                Path to temp audio file
+        """
+
+        os.remove(tempVideoFile)
+        os.remove(tempAudioFile)
+
 
 
 # Download's the requested video in audio format. Accepts the video's url, the inputed filename, the desired download loaction,
@@ -178,6 +172,8 @@ def selectFolder():
     root.withdraw()
     directory_path = filedialog.askdirectory()
     print(directory_path)
+
+    DownloadVideo.outputpath = os.path.join(directory_path)
 
     return directory_path
 

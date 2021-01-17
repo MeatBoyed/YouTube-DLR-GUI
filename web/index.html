@@ -31,28 +31,21 @@
       <p id="errorMessage"></p>
 
       <div id="EditAndResolutionSection">
-        <div id="EditFileContainer">
-          <h2>Download Audio</h2>
-          <!-- <form action=""> -->
-          <input type="text" placeholder="File Name" value="" name="fileName" id="fileDataInput" />
-          <input type="text" placeholder="Album Artist" name="albumArtist" id="fileDataInput" />
-          <input type="text" placeholder="Contributing Artists (Ft artists)" name="contributingArtists" id="fileDataInput" />
-          <input type="text" placeholder="Album Name" name="albumName" id="fileDataInput" />
-          <div class="downloadLocationContainer">
-            <p id="downloadLocationPath">/Downloads</p>
-            <button class="items" onclick="GetDownloadLocation()" id="file">Choose folder</button>
-          </div>
-          <button type="submit" class="downloadButton">Download</button>
-          <!-- </form> -->
-        </div>
         <div id="ResolutionSelectContainer">
-          <h2>Download Video</h2>
-          <input type="text" placeholder="File Name" value="" name="fileName" id="fileDataInput" />
-          <input type="button" value="720p" onclick="DownloadVideo('720p')" class="resolutionSelect" id="720" />
-          <input type="button" value="480p" onclick="DownloadVideo('480p')" class="resolutionSelect" id="480" />
-          <input type="button" value="360p" onclick="DownloadVideo('360p')" class="resolutionSelect" id="360" />
-          <input type="button" value="240p" onclick="DownloadVideo('240p')" class="resolutionSelect" id="240" />
-          <input type="button" value="144p" onclick="DownloadVideo('144p')" class="resolutionSelect" id="144" />
+          <form action="">
+            <h2>Download Video</h2>
+            <input type="text" placeholder="File Name" name="fileName" id="fileDataInput" />
+            <p id="downloadPath"></p>
+            <!-- <div class="downloadLocationContainer">
+              <"downloadLocationPath">/Downloads</p>
+              <button class="items" onclick="GetDownloadLocation()" id="file">Choose folder</button>
+            </div> -->
+            <input type="button" value="720p" onclick="DownloadVideo('720p')" class="resolutionSelect" id="720" />
+            <input type="button" value="480p" onclick="DownloadVideo('480p')" class="resolutionSelect" id="480" />
+            <input type="button" value="360p" onclick="DownloadVideo('360p')" class="resolutionSelect" id="360" />
+            <input type="button" value="240p" onclick="DownloadVideo('240p')" class="resolutionSelect" id="240" />
+            <input type="button" value="144p" onclick="DownloadVideo('144p')" class="resolutionSelect" id="144" />
+          </form>
         </div>
       </div>
     </section>
