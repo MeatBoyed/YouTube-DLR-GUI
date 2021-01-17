@@ -8,6 +8,8 @@ gevent-websocket==0.10.1
 greenlet==1.0.0
 pycparser==2.20
 pyparsing==2.4.7
+pytube==10.4.1
+typing-extensions==3.7.4.3
 whichcraft==0.6.1
 zope.event==4.5.0
 zope.interface==5.2.0
