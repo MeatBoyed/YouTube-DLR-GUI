@@ -28,3 +28,22 @@ function GetDownloadLocation() {
         downloadPath.innerText = response
     });
 }
+
+// Download video function
+function DownloadVideo(resolution) {
+
+    console.log("Function has fired")
+
+    // let videoURL = document.getElementById("videoURLInput").value
+    let videoURL = "https://www.youtube.com/watch?v=FIB33xnTq0E"
+    // let fileName = document.getElementById("filename").value
+    let fileName = "outputwooo"
+    // let outputPath = document.getElementById("downloadLocationPath").innerText
+    let outputPath = "C:/Users/charl/Desktop"
+
+    eel.DownloadVideo(videoURL, resolution, fileName, outputPath)(function(response) {
+        console.log(resolution)
+
+        document.getElementById("downloadLocationPath").innerText = response 
+    })
+}
