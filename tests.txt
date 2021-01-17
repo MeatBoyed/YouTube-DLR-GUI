@@ -1,11 +1,6 @@
-Be able to output all of the available resolutions
-Use PyTube.streams to do this
-
-Be able to download a video of a specific resolution.
-Seen as you're not going higher than 720p for videos becuase of DASH. Just use PyTube. You can easily make clear filterson which stream you want and download speeds aren't too much of an issue.
+*For downloading audio only. Use youtube-dl as you can download audio in a higher bit rate than pytube for the best audio quality
 
 Be able to show progress bar
-
 
 
 Be able to change the name of the file with entered name param.
@@ -23,3 +18,9 @@ After the video's url has been inputted, run a quick function to check that it's
 HTML.
 
 Each download button for video, will take the inputted url's value and the filename along with download location, and use this data for download function params, also specifying the video's quality.
+
+Program will have to use FFmpeg to merge both audio and video files for each download resolution options.
+Notes on how to do this:
+https://www.reddit.com/r/learnpython/comments/ey41dp/merging_video_and_audio_using_ffmpegpython/
+https://docs.agora.io/en/cloud_recording/cloud_recording_merge_files
+https://superuser.com/questions/277642/how-to-merge-audio-and-video-file-in-ffmpeg

@@ -1,7 +1,8 @@
-from logging import error
 import eel
 from pytube import YouTube
 from pytube import exceptions
+import tkinter as tk
+from tkinter import filedialog
 
 eel.init("web")
 
@@ -93,6 +94,7 @@ def DataFetch(youtubeVideoInstance):
 # Download's the requested video. Accepts video's url, the selected video resolution, and the desired download location path
 def DownloadVideo(url: str, resolution: str, filename: str, downloadLocation: str):
     # Make query to download the video with the correct parameters
+
     pass
 
 # Download's the requested video in audio format. Accepts the video's url, the inputed filename, the desired download loaction,
@@ -102,5 +104,14 @@ def DownloadAudio(url: str, filename: str, downloadLocation: str, metadata: dict
     # Edit .mp3 metadata with the inputed metadata fields
     pass
 
+@eel.expose
+def selectFolder():
+    print("Here")
+    root = tk.Tk()
+    root.withdraw()
+    directory_path = filedialog.askdirectory()
+    print(directory_path)
+
+    return directory_path
 
 eel.start("index.html")
