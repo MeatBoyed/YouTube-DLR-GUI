@@ -1,10 +1,10 @@
 import os
 import eel
-from pytube import YouTube
-from pytube import exceptions
+import re
+import moviepy.editor as mp
 import tkinter as tk
 from tkinter import filedialog
-import moviepy.editor as mp
+from pytube import YouTube, exceptions
 
 eel.init("web")
 
@@ -29,6 +29,8 @@ def ValidateURL(url: str):
     try:
         # Create PyTube YouTube object instance
         video = YouTube(url)
+
+        # Give DownloadVideo class the required YouTube class object
         DownloadVideo.videoInstance = video
 
         # Call DataFetching helper function
@@ -74,12 +76,17 @@ def DataFetch(youtubeVideoInstance):
     """
 
     availabelResolutions = []
+    fileName = ""
 
     # Get list of availabel streams, filterig out DASH streams
     streams = youtubeVideoInstance.streams.filter(progressive=True)
 
     # Collect video's title for the file name
-    fileName = youtubeVideoInstance.title
+    title = youtubeVideoInstance.title
+
+    # Clear special character that might exist in the video's title
+    for sc in title.split("\n"):
+        fileName = re.sub(r"[^a-zA-Z0-9]+", ' ', sc)
 
     # Iterating through all streams to collect availabel resolutions
     for stream in streams:
@@ -116,6 +123,7 @@ class DownloadVideo():
         # Download the tempuraty video and audio files needed to merge for final video. Will return audio file's path
         tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
         tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
+        
 
         # Merge files together
         result = self.MergeFiles(tempVideo=tempVideo, tempAudio=tempAudio, outputPath=self.outputpath, fileName=fileName)
