@@ -75,7 +75,6 @@ def DataFetch(youtubeVideoInstance):
             A PyTube YouTube() class instance, which will be used to collect data on
     """
 
-    availabelResolutions = []
     fileName = ""
 
     # Get list of availabel streams, filterig out DASH streams
@@ -88,13 +87,8 @@ def DataFetch(youtubeVideoInstance):
     for sc in title.split("\n"):
         fileName = re.sub(r"[^a-zA-Z0-9]+", ' ', sc)
 
-    # Iterating through all streams to collect availabel resolutions
-    for stream in streams:
-        availabelResolutions.append(stream.resolution)
-
     response = {
         "fileName": fileName,
-        "resolutions": availabelResolutions,
     }
 
     return response
@@ -120,10 +114,9 @@ class DownloadVideo():
 
         print("Download has begun")
 
-        # Download the tempuraty video and audio files needed to merge for final video. Will return audio file's path
-        tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
-        tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
         
+        # Download the temp Video and Audio files
+        tempVideo, tempAudio = self.DownloadFiles(resolution=resolution)
 
         # Merge files together
         result = self.MergeFiles(tempVideo=tempVideo, tempAudio=tempAudio, outputPath=self.outputpath, fileName=fileName)
@@ -132,6 +125,27 @@ class DownloadVideo():
         self.CleanUp(tempVideoFile=tempVideo, tempAudioFile=tempAudio)
         
         self.response = result
+
+    def DownloadFiles(self, resolution: str):
+
+        # Check if tempAudio file exists (has been downloaded previously)
+        if os.path.exists("./temp/audio.webm"):
+            tempAudio = os.path.realpath("./temp/audio.webm")
+            print("exist webm")
+        elif os.path.exists("./temp/audio.mp4"):
+            tempAudio = os.path.realpath("./temp/audio.mp4")
+            print("exists mp4")
+        else:
+            tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
+            print("doesn't exist, downloading the tempAudio file")
+
+
+        # Download the tempuraty video and file needed to merge for final video. Will return audio file's path
+        tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
+
+        # Return tempVideo and tempAudio file paths
+        return tempVideo, tempAudio
+
     
     # Use Moviepy to merge audio and video files
     def MergeFiles(self, tempVideo, tempAudio, outputPath, fileName):
