@@ -121,3 +121,7 @@ a {
 #downloadPath {
   display: none;
 }
+
+#errorMessage {
+  width: 70%;
+}

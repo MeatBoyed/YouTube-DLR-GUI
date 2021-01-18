@@ -1,7 +1,7 @@
-from logging import error
 import os
 import eel
 import re
+import time
 import moviepy.editor as mp
 import tkinter as tk
 from tkinter import filedialog
@@ -72,16 +72,11 @@ def ValidateURL(url: str):
 def DataFetch(youtubeVideoInstance):
 
     """
-        :param str url:
-            A valid YouTube video url
         :param youtubeVideoInstance:
             A PyTube YouTube() class instance, which will be used to collect data on
     """
 
     fileName = ""
-
-    # Get list of availabel streams, filterig out DASH streams
-    streams = youtubeVideoInstance.streams.filter(progressive=True)
 
     # Collect video's title for the file name
     title = youtubeVideoInstance.title
@@ -99,7 +94,7 @@ def DataFetch(youtubeVideoInstance):
 class DownloadVideo():
 
     # Add all class variables here
-    response = ""
+    response = {}
     outputpath = ""
     videoInstance = None
 
@@ -123,9 +118,15 @@ class DownloadVideo():
         result = self.MergeFiles(tempVideo=tempVideo, tempAudio=tempAudio, outputPath=self.outputpath, fileName=fileName)
 
         # Clean up files
-        self.CleanUp(tempVideoFile=tempVideo, tempAudioFile=tempAudio)
+        cleanUpResponse = self.CleanUp(tempVideoFile=tempVideo, tempAudioFile=tempAudio)
         
-        self.response = result
+        self.response = {
+            "finalResponse": result,
+            "cleanUpResponse": cleanUpResponse 
+        }
+
+        return self.response
+
 
     def DownloadFiles(self, resolution: str):
 
@@ -137,12 +138,24 @@ class DownloadVideo():
             tempAudio = os.path.realpath("./temp/audio.mp4")
             print("exists mp4")
         else:
-            tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
-            print("doesn't exist, downloading the tempAudio file")
+            
+            try:
 
+                # Download audio
+                tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
+                print("doesn't exist, downloading the tempAudio file")
 
-        # Download the tempuraty video and file needed to merge for final video. Will return audio file's path
-        tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
+            except ConnectionError:
+                time.sleep(1)
+                tempAudio = self.videoInstance.streams.filter(only_audio=True).order_by("abr").desc().first().download(output_path="./temp", filename="audio")
+            
+
+        try:
+            # Download the tempuraty video and file needed to merge for final video. Will return audio file's path
+            tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
+        except ConnectionError:
+            time.sleep(1)
+            tempVideo = self.videoInstance.streams.filter(file_extension="mp4", only_video=True, resolution=resolution).desc().first().download(output_path="./temp", filename="video")
 
         # Return tempVideo and tempAudio file paths
         return tempVideo, tempAudio
@@ -151,20 +164,38 @@ class DownloadVideo():
     # Use Moviepy to merge audio and video files
     def MergeFiles(self, tempVideo, tempAudio, outputPath, fileName):
 
-        # Import video and audio files as moviepy objects
-        video = mp.VideoFileClip(tempVideo)
-        audio = mp.AudioFileClip(tempAudio)
+        # Import video file as moviepy object
+        try:
+            video = mp.VideoFileClip(tempVideo)
+        except Exception as e:
+            self.response = "An error occured during getting Video file as an Moviepy object. " + str(e)
+
+
+        # Import audio file as moviepy object
+        try:
+            audio = mp.AudioFileClip(tempAudio)
+        except Exception as e:
+            self.response = "An error occured during getting audio file as an Moviepy object. " + str(e)
+
 
         # Adding audio track to video file
-        tempOutputVideo = video.set_audio(audio)
+        try:
+            tempOutputVideo = video.set_audio(audio)
+        except Exception as e:
+            self.response = "An error occured during merging the files. " + str(e)
+            print(self.response)
 
-        # Write changes to new output file. Filename is (desired outputPath + desired fileName)
-        tempOutputVideo.write_videofile(os.path.join(outputPath, (fileName + ".mp4")))
+        
+        try:
+            # Write changes to new output file. Filename is (desired outputPath + desired fileName)
+            tempOutputVideo.write_videofile(os.path.join(outputPath, (fileName + ".mp4")))
+        except Exception as e:
+            self.response = "An error occured during writing to video file. " + str(e)
+            print("An error occured during write to video file. ", str(e))
 
         print("Merge completeed")
 
         self.response = "Download Successful"
-
         
     # Use OS to delete all temp files and folders
     def CleanUp(self, tempVideoFile, tempAudioFile):
@@ -176,9 +207,12 @@ class DownloadVideo():
                 Path to temp audio file
         """
 
-        os.remove(tempVideoFile)
-        os.remove(tempAudioFile)
-
+        # Delete temp video and audio files
+        try:
+            os.remove(tempVideoFile)
+            os.remove(tempAudioFile)
+        except Exception as e:
+            return "An error occured while deleteing temp files: " + str(e)
 
 
 # Download's the requested video in audio format. Accepts the video's url, the inputed filename, the desired download loaction,

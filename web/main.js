@@ -6,10 +6,17 @@ function ValidateURL() {
     let output = document.getElementById("errorMessage")
     let fileName = document.getElementById("fileDataInput")
 
-    // Calling to Python utils function
+    // Calling to Python utils ValidateURL function
     eel.ValidateURL(videoURL)(function(response) {
 
-        // Ouputing the returned response message into Error Message field
+        // Change videoURL input field colour based on response's error message
+        if (response.errorMessage === "") {
+            document.getElementById("videoURLInput").style.borderColor = "green"
+        }else {
+            document.getElementById("videoURLInput").style.borderColor = "red"
+        }
+
+        // Ouputing the returned response messages 
         output.innerText = response.errorMessage 
         fileName.value = response.fileName
     })
@@ -28,6 +35,6 @@ function DownloadVideo(resolution) {
     let errorMessage = document.getElementById("errorMessage")
 
     eel.DownloadVideo(resolution, fileName)(function(response) {
-        errorMessage.innerText = response
+        errorMessage.innerText = response.finalResponse
     })
 }
