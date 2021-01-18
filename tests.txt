@@ -1,0 +1,26 @@
+*For downloading audio only. Use youtube-dl as you can download audio in a higher bit rate than pytube for the best audio quality
+
+Be able to show progress bar
+
+
+Be able to change the name of the file with entered name param.
+command: python -m youtube_dl -o [filename] [url]
+-o states the output name of the file, must be followed by the desired video name.
+
+Be able to change the download location with ented download location param.
+command: python -m youtube_dl -o [path + filename] [url]
+
+Use youtube-dl for downloading audio as it is considrably faster than PyTube
+
+
+Every button call will always access the value inside the "videoURL" input.
+After the video's url has been inputted, run a quick function to check that it's valid and can be downloaded. Maybe run also get all the availabele resolutions to the video and find a way to iterate over the list and output it with JS to
+HTML.
+
+Each download button for video, will take the inputted url's value and the filename along with download location, and use this data for download function params, also specifying the video's quality.
+
+Program will have to use FFmpeg to merge both audio and video files for each download resolution options.
+Notes on how to do this:
+https://www.reddit.com/r/learnpython/comments/ey41dp/merging_video_and_audio_using_ffmpegpython/
+https://docs.agora.io/en/cloud_recording/cloud_recording_merge_files
+https://superuser.com/questions/277642/how-to-merge-audio-and-video-file-in-ffmpeg

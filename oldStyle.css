@@ -1,0 +1,160 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: 'rubik', sans-serif;
+  background-color: #1b262c;
+  font-size: 29px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 0;
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+#header p {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+#urlInputSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 65%;
+}
+
+.urlInput {
+  width: 68%;
+  border: 4px solid #3282b8;
+  box-sizing: border-box;
+  border-radius: 12px;
+  height: 56px;
+  padding: 17px 20px;
+  font-size: 14px;
+  outline: none;
+}
+
+.downloadButton {
+  background-image: initial;
+  background-color: rgb(141, 35, 35);
+  box-shadow: rgba(124, 49, 38, 0.4) 0px 4px 10px;
+  border-color: initial;
+  color: rgb(243, 246, 252);
+  margin-left: 10px;
+  background: red;
+  box-shadow: 0 4px 10px rgba(255, 86, 63, 0.4);
+  border-radius: 12px;
+  padding: 18px 40px;
+  display: inline-block;
+  border: none;
+  color: #fdfdfe;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.downloadButton:hover {
+  background-image: initial;
+  background-color: rgb(72, 74, 75);
+  color: rgb(252, 251, 249);
+  box-shadow: none;
+}
+
+#optionsSection {
+  display: flex;
+  flex-direction: row;
+  width: 56%;
+  margin-top: 13px;
+}
+
+.formatSelect,
+.qualitySelect {
+  padding: 8px 12px;
+  color: #333333;
+  background-color: #eeeeee;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.formatSelect:focus,
+.formatSelect:hover,
+.qualitySelect:focus,
+.qualitySelect:hover {
+  outline: none;
+  border: 1px solid #bbbbbb;
+}
+
+.formatSelect,
+.qualitySelect option {
+  background: #ffffff;
+}
+
+.formatSelect {
+  margin-right: 0.7em;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .title {
+    font-size: 19px;
+  }
+
+  #header p {
+    font-size: 10px;
+  }
+
+  #urlInputSection {
+    width: 95%;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .urlInput {
+    width: 100%;
+  }
+
+  .downloadButton {
+    width: 100%;
+    margin: 13px, 0, 0, 0;
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Import Eel and main.js -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <!-- Importing js linker -->
+    <script type="text/javascript" src="main.js"></script>
+
+    <title>YouTube DLR</title>
+  </head>
+  <body>
+    <section id="main">
+      <div id="InputFormatSection">
+        <form action="">
+          <input
+            type="text"
+            type="submit"
+            onchange="ValidateURL()"
+            name="videoURL"
+            placeholder="Enter YouTube URL"
+            id="videoURLInput"
+          />
+        </form>
+      </div>
+
+      <p id="errorMessage"></p>
+
+      <div id="EditAndResolutionSection">
+        <div id="ResolutionSelectContainer">
+          <form action="">
+            <h2>Download Video</h2>
+            <input type="text" placeholder="File Name" name="fileName" id="fileDataInput" />
+            <p id="downloadPath"></p>
+            <!-- <div class="downloadLocationContainer">
+              <"downloadLocationPath">/Downloads</p>
+              <button class="items" onclick="GetDownloadLocation()" id="file">Choose folder</button>
+            </div> -->
+            <input type="button" value="720p" onclick="DownloadVideo('720p')" class="resolutionSelect" id="720" />
+            <input type="button" value="480p" onclick="DownloadVideo('480p')" class="resolutionSelect" id="480" />
+            <input type="button" value="360p" onclick="DownloadVideo('360p')" class="resolutionSelect" id="360" />
+            <input type="button" value="240p" onclick="DownloadVideo('240p')" class="resolutionSelect" id="240" />
+            <input type="button" value="144p" onclick="DownloadVideo('144p')" class="resolutionSelect" id="144" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
