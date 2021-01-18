@@ -1,3 +1,4 @@
+from logging import error
 import os
 import eel
 import re
@@ -23,7 +24,7 @@ def ValidateURL(url: str):
     """
 
     errorMessage = ""
-    data = {}
+    fileName = ""
 
     # Run PyTube validation checks
     try:
@@ -34,7 +35,7 @@ def ValidateURL(url: str):
         DownloadVideo.videoInstance = video
 
         # Call DataFetching helper function
-        data = DataFetch(video)
+        fileName = DataFetch(video)
 
         # Reset's response for output
         errorMessage = ""
@@ -54,12 +55,14 @@ def ValidateURL(url: str):
         errorMessage = "Video is assessable by Memebers Only."
     except exceptions.LiveStreamError:
         errorMessage = "Video is currently being Live Streamed."
+    except ConnectionError:
+        errorMessage = "Connection Error. Check you internet connection or try again"
     except Exception as e:
         errorMessage = "An unexpected error occured while downloading the video: " + str(e)
     
     response = {
         "errorMessage": errorMessage,
-        "videoData": data
+        "fileName": fileName
     }
 
     return response
@@ -87,9 +90,7 @@ def DataFetch(youtubeVideoInstance):
     for sc in title.split("\n"):
         fileName = re.sub(r"[^a-zA-Z0-9]+", ' ', sc)
 
-    response = {
-        "fileName": fileName,
-    }
+    response = fileName
 
     return response
 

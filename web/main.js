@@ -9,12 +9,9 @@ function ValidateURL() {
     // Calling to Python utils function
     eel.ValidateURL(videoURL)(function(response) {
 
-        // Storing video resolutions
-        let resolution = response.videoData.resolutions
-
         // Ouputing the returned response message into Error Message field
         output.innerText = response.errorMessage 
-        fileName.value = response.videoData.fileName
+        fileName.value = response.fileName
     })
 }
 
