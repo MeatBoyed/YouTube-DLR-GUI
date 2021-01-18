@@ -14,6 +14,10 @@
     <title>YouTube DLR</title>
   </head>
   <body>
+    <div id="LoadingSpinner">
+      <i class="gg-spinner-two-alt"></i>
+      <p id="LoadingText">Verifying URL</p>
+    </div>
     <section id="main">
       <div id="InputFormatSection">
         <form action="">
@@ -36,10 +40,6 @@
             <h2>Download Video</h2>
             <input type="text" placeholder="File Name" name="fileName" id="fileDataInput" />
             <p id="downloadPath"></p>
-            <!-- <div class="downloadLocationContainer">
-              <"downloadLocationPath">/Downloads</p>
-              <button class="items" onclick="GetDownloadLocation()" id="file">Choose folder</button>
-            </div> -->
             <input type="button" value="720p" onclick="DownloadVideo('720p')" class="resolutionSelect" id="720" />
             <input type="button" value="480p" onclick="DownloadVideo('480p')" class="resolutionSelect" id="480" />
             <input type="button" value="360p" onclick="DownloadVideo('360p')" class="resolutionSelect" id="360" />

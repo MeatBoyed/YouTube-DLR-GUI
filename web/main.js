@@ -6,6 +6,10 @@ function ValidateURL() {
     let output = document.getElementById("errorMessage")
     let fileName = document.getElementById("fileDataInput")
 
+    // Activate Loading Spinner and set Text
+    document.getElementById("LoadingSpinner").style.display = "block"
+    document.getElementById("LoadingText").innerText = "Verifying URL ...."
+
     // Calling to Python utils ValidateURL function
     eel.ValidateURL(videoURL)(function(response) {
 
@@ -15,6 +19,10 @@ function ValidateURL() {
         }else {
             document.getElementById("videoURLInput").style.borderColor = "red"
         }
+
+        // Deactivaet Loading Spinner and reset text
+        document.getElementById("LoadingSpinner").style.display = "none"
+        document.getElementById("LoadingText").innerText = ""
 
         // Ouputing the returned response messages 
         output.innerText = response.errorMessage 
@@ -34,7 +42,15 @@ function DownloadVideo(resolution) {
     let fileName = document.getElementById("fileDataInput").value
     let errorMessage = document.getElementById("errorMessage")
 
+    // Activate Loading Spinner and set Text
+    document.getElementById("LoadingSpinner").style.display = "block"
+    document.getElementById("LoadingText").innerText = "Downloading video ..."
+
     eel.DownloadVideo(resolution, fileName)(function(response) {
-        errorMessage.innerText = response.finalResponse
+        errorMessage.innerText = "Video is downloaded!"
+
+        // Deactivaet Loading Spinner and reset text
+        document.getElementById("LoadingSpinner").style.display = "none"
+        document.getElementById("LoadingText").innerText = ""
     })
 }
